@@ -19,3 +19,7 @@ WebP 动画合成工具
 ---
 Demo:
 
+![选择序列图片](https://raw.githubusercontent.com/wangan/WebPMaker/master/Demo/1.webp)
+![配置动画参数](https://raw.githubusercontent.com/wangan/WebPMaker/master/Demo/2.webp)
+![成功提示](https://raw.githubusercontent.com/wangan/WebPMaker/master/Demo/3.webp)
+![效果预览](https://raw.githubusercontent.com/wangan/WebPMaker/master/Demo/4.webp)

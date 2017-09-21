@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+  <Bundle Name="WebP 动画合成安装程序" Version="1.0.0.0" 
+          Manufacturer="langke.tv"          
+          UpgradeCode="06e0e617-d3f3-48f0-bfbf-5df1801a10ca">
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
+      <bal:WixStandardBootstrapperApplication
+        LicenseFile="$(var.WebPMaker.Setup.ProjectDir)/license.rtf"
+        xmlns="http://schemas.microsoft.com/wix/BalExtension" />
+    </BootstrapperApplicationRef>
+    <Chain>
+      <MsiPackage Name="WebPMaker.Setup" SourceFile="$(var.WebPMaker.Setup.TargetPath)" />
+    </Chain>
+
+  </Bundle>
+</Wix>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="zh-cn" Codepage="936" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="ICON_Description">WebP 动画合成</String>
+  <String Id="Lang">2052</String>
+  <String Id="Code">936</String>
+</WixLocalization>

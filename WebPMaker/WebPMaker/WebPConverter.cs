@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace WebPMaker {
     public class WebPConverter {
         private Dictionary<int, TaskCompletionSource<bool>> TSC = new Dictionary<int, TaskCompletionSource<bool>>();
-        public static string Exe_cwebp { get; set; } = @"D:\Application\libwebp-0.6.0-windows-x64\bin\cwebp.exe";
-        public static string Exe_webpmux { get; set; } = @"D:\Application\libwebp-0.6.0-windows-x64\bin\webpmux.exe";
+        public static string Exe_cwebp { get; set; } = $@"{AppDomain.CurrentDomain.BaseDirectory}\libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\cwebp.exe";
+        public static string Exe_webpmux { get; set; } = $@"{AppDomain.CurrentDomain.BaseDirectory}\libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\webpmux.exe";
         private string _imgDir { get; set; }
         private string _tempDir { get; set; }
         private string _tempFileName { get; set; }

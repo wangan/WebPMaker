@@ -2,24 +2,38 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProductVersion>3.10</ProductVersion>
-    <ProjectGuid>cb59720f-17b9-43dd-be5b-e402602cfef1</ProjectGuid>
+    <ProjectGuid>68724f9d-b281-4b2e-a717-4219deeb77fc</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>WebPMaker.Setup</OutputName>
     <OutputType>Package</OutputType>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DefineConstants>Debug</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <Cultures>zh-CN</Cultures>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
+    <WixExtension Include="WixUIExtension">
+      <HintPath>WixUIExtension</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebPMaker\WebPMaker.csproj">
@@ -30,6 +44,58 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="libwebp" />
+    <Folder Include="libwebp\libwebp-0.6.0-windows-x64-no-wic" />
+    <Folder Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin" />
+    <Folder Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\include" />
+    <Folder Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp" />
+    <Folder Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib" />
+    <Folder Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\pkgconfig" />
+    <Folder Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\share" />
+    <Folder Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man" />
+    <Folder Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man\man1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\anim_diff.exe" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\cwebp.exe" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\dwebp.exe" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\freeglut.dll" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\gif2webp.exe" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\img2webp.exe" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\vwebp.exe" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\webpmux.exe" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\decode.h" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\demux.h" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\encode.h" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\mux.h" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\mux_types.h" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\types.h" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebp.a" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebp.la" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpdecoder.a" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpdecoder.la" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpdemux.a" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpdemux.la" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpmux.a" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpmux.la" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\pkgconfig\libwebp.pc" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\pkgconfig\libwebpdecoder.pc" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\pkgconfig\libwebpdemux.pc" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\pkgconfig\libwebpmux.pc" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\Readme-mux.txt" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\Readme.txt" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man\man1\cwebp.1" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man\man1\dwebp.1" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man\man1\gif2webp.1" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man\man1\webpmux.1" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\test.webp" />
+    <Content Include="libwebp\libwebp-0.6.0-windows-x64-no-wic\test_ref.ppm" />
+    <Content Include="license.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WixUI_zh-cn.wxl" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />

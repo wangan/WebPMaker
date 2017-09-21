@@ -1,33 +1,242 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="WebPMaker.Setup" Language="1033" Version="1.0.0.0" Manufacturer="langke.tv" UpgradeCode="10a66f69-fc74-4cb3-9609-8d97c298c8d6">
+  <Product Id="*" Name="WebPMaker.Setup"
+           Codepage="936"
+           Language="!(loc.Lang)"
+           Version="1.0.0.0"
+           Manufacturer="langke.tv"
+           UpgradeCode="69275da8-8651-4ad4-9081-174f470520fc">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
-
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate />
 
-    <Feature Id="ProductFeature" Title="WebPMaker.Setup" Level="1">
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+    <Feature Id="Software"
+             Title="WebPMaker.Setup"
+             Level="1">
+
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcutDesktop" />
+      <ComponentGroupRef Id="libwebp" />
     </Feature>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
   </Product>
 
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="WebPMaker.Setup" />
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="WebPMaker" >
+          <Directory Id="libwebpDir" />
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="ApplicationShortcutDesktop" Guid="*">
+          <Shortcut Id="ApplicationDesktopShortcut"
+              Name="WebPMaker"
+              Description="!(loc.ICON_Description)"
+              Target="[INSTALLFOLDER]WebPMaker.exe"
+              WorkingDirectory="INSTALLFOLDER"/>
+          <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+          <RegistryValue
+              Root="HKCU"
+              Key="Software/WebPMaker"
+              Name="installed"
+              Type="integer"
+              Value="1"
+              KeyPath="yes"/>
+        </Component>
       </Directory>
     </Directory>
   </Fragment>
 
+  <!--<Fragment>
+    <Property Id="SOURCEDIRECTORY" Value="libwebp\libwebp-0.6.0-windows-x64-no-wic" />
+    <DirectoryRef Id="libwebp">
+      <Component Guid="A7C42303-1D77-4C70-8D5C-0FD0F9158EB4" Id="CopyComponent">
+        <CopyFile Id="copyLibwebp" SourceDirectory="" SourceProperty="SOURCEDIRECTORY" DestinationDirectory="libwebp" SourceName="*" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>-->
+
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-      <!-- <Component Id="ProductComponent"> -->
-      <!-- TODO: Insert files, registry keys, and other resources here. -->
-      <!-- </Component> -->
       <Component Id="ProductComponent">
         <File Source="$(var.WebPMaker.TargetPath)" />
       </Component>
+    </ComponentGroup>
+
+    <!--<DirectoryRef Id="libwebp">
+      <Component Id="libwebp" Guid="5E254682-DD5F-453D-8333-844457282026">
+        <File Id="cwebp.exe"  Source="libwebp/libwebp-0.6.0-windows-x64-no-wic/bin/cwebp.exe" />
+        <File Id="webpmux.exe"  Source="libwebp/libwebp-0.6.0-windows-x64-no-wic/bin/webpmux.exe" />
+      </Component>
+    </DirectoryRef>-->
+  </Fragment>
+
+
+  <Fragment>
+    <DirectoryRef Id="libwebpDir">
+      <Directory Id="dir78310A30CF2BBF421122DA54201CCE04" Name="libwebp">
+        <Directory Id="dir852AAE7E8D54A2199219A7771881200E" Name="libwebp-0.6.0-windows-x64-no-wic">
+          <Component Id="cmp03FC60FD4FD1FD59559B6A901D50FE25" Guid="*">
+            <File Id="filF1CDC7F8A76A5096CFCB12FC8CB2A6E7" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\Readme-mux.txt" />
+          </Component>
+          <Component Id="cmp6F1BFE0FE3D8F078EC80ECFE99267EEE" Guid="*">
+            <File Id="fil779B74CDE66A6239F57250E4C36B0722" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\Readme.txt" />
+          </Component>
+          <Component Id="cmpFCBCDF7EBFF1854CE7F409A4F0C58D7C" Guid="*">
+            <File Id="filC9D437BAF74E72214B18535D77CE247A" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\test.webp" />
+          </Component>
+          <Component Id="cmp32450DDDD7CBE5B5207432F83AFD59AE" Guid="*">
+            <File Id="fil482605ABE199DB570DDD825BB7683C57" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\test_ref.ppm" />
+          </Component>
+          <Directory Id="dir02400B9969C4BD61E06DF1D7C41F5CE3" Name="bin">
+            <Component Id="cmpE6ED10BFCFB207C8C3E15461859911D5" Guid="*">
+              <File Id="fil0846C7BF70A56F7101957E3F2ADA9E41" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\anim_diff.exe" />
+            </Component>
+            <Component Id="cmp903EF1FEC0BAC4CB4075F3571ADFE5AA" Guid="*">
+              <File Id="fil1B085C2271F5F9BE9983E3337B68467E" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\cwebp.exe" />
+            </Component>
+            <Component Id="cmp5C3EFE975771E035B8871A2F7F2D2A49" Guid="*">
+              <File Id="fil88ABCBB3D0CBC35B5DDC28B8579CCB65" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\dwebp.exe" />
+            </Component>
+            <Component Id="cmpF732EFFF668296A282A452C7057CBD41" Guid="*">
+              <File Id="fil52FD2CC5FA881A575785BF68B362283B" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\freeglut.dll" />
+            </Component>
+            <Component Id="cmp6EA22DF2EEB957FD0BBB81B5B47AC580" Guid="*">
+              <File Id="fil1130F205B943D1572751C4A0C2928931" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\gif2webp.exe" />
+            </Component>
+            <Component Id="cmpB0A03CC02F735A016B1197C9594342BF" Guid="*">
+              <File Id="fil0A466D3D944B6312FCD7CE84425D8812" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\img2webp.exe" />
+            </Component>
+            <Component Id="cmp82CF56635B61D0912BBD37E70E44C555" Guid="*">
+              <File Id="fil2486240CA536168631EE9D75495BDF5C" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\vwebp.exe" />
+            </Component>
+            <Component Id="cmp7675EC369EB779A7172DBA23E847FFB4" Guid="*">
+              <File Id="fil1C376C54372017F79E6BD05D0B2A583E" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\bin\webpmux.exe" />
+            </Component>
+          </Directory>
+          <Directory Id="dirB510AC83C37A3C712D087FA4BF22510C" Name="include">
+            <Directory Id="dirD5BCB325EBB03DA54CBEE185203FC045" Name="webp">
+              <Component Id="cmp1D4A6E2B0188F0E72EEDDDC68033EB65" Guid="*">
+                <File Id="fil4AB8CEC4E905A50AB2B79F413B3CD982" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\decode.h" />
+              </Component>
+              <Component Id="cmp6908FC86E7406C623FB2668C36DCA3A8" Guid="*">
+                <File Id="fil40DAA5FB3EBF789151FE505B77F2D9AA" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\demux.h" />
+              </Component>
+              <Component Id="cmpB596612BEBD35DEE25ACFF91F254F19D" Guid="*">
+                <File Id="fil9E1E272F9F4DDD7DD8EF52D6E1C26D55" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\encode.h" />
+              </Component>
+              <Component Id="cmpCAC49D6C1DDEE7B6B676E99199CD8EA3" Guid="*">
+                <File Id="fil5B764C2E90B43461039C2B65D59594C1" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\mux.h" />
+              </Component>
+              <Component Id="cmp611019CDB2F00571E6EF90325DF9B99D" Guid="*">
+                <File Id="filA082FDE2D6C53CA538BF605B133AE968" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\mux_types.h" />
+              </Component>
+              <Component Id="cmpBB8462081D5B3C76EE2EE723EEEF2B27" Guid="*">
+                <File Id="fil26A24FF363AE9DC51738DC98A8BB7FC2" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\include\webp\types.h" />
+              </Component>
+            </Directory>
+          </Directory>
+          <Directory Id="dirD05FD561BD13079827CEB356B2DF9373" Name="lib">
+            <Component Id="cmpE8803E0B7094EC870B24AB6876510617" Guid="*">
+              <File Id="fil431DBDA731315C18873636A7C9BD8A72" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebp.a" />
+            </Component>
+            <Component Id="cmpEF8A8C3B73F08620D4E8EA337CB4C821" Guid="*">
+              <File Id="filEBF33B170B5F9C16960EDE93A8F42561" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebp.la" />
+            </Component>
+            <Component Id="cmpF8B0E4E4650EBCD012A7EBAA17427FE5" Guid="*">
+              <File Id="fil7CCE82F65FD525C0F33632A4B718C94F" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpdecoder.a" />
+            </Component>
+            <Component Id="cmpD6A342B9260218E3EF5464335CC76859" Guid="*">
+              <File Id="fil09AB941B80FEB95EC1E9F360E8AF60D4" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpdecoder.la" />
+            </Component>
+            <Component Id="cmp37EE3939EF2065D13F1073809D01A797" Guid="*">
+              <File Id="fil4345BDEC963C4D3690F2A9926ACA235A" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpdemux.a" />
+            </Component>
+            <Component Id="cmp7537AF1AF90467B1034526C389EF3084" Guid="*">
+              <File Id="fil0F4DDD5430B57F1A7C87ADE7BCAE9C1A" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpdemux.la" />
+            </Component>
+            <Component Id="cmpF1CA9341C045DDE9B831E4906E1F6F80" Guid="*">
+              <File Id="fil54504300210C9D18AF3E0DC52C32B060" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpmux.a" />
+            </Component>
+            <Component Id="cmp9EC2D83D5990AC2E89BF8BE475A73027" Guid="*">
+              <File Id="fil51A9EB4AFB6C9C34C44AFFC508C51451" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\libwebpmux.la" />
+            </Component>
+            <Directory Id="dir046AEC424D75AD02A0F072865007069F" Name="pkgconfig">
+              <Component Id="cmp8A0AB572C691416739DD26AE09F0AE0B" Guid="*">
+                <File Id="filAC44C801F2A3FAE99F996DFC8FD251A2" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\pkgconfig\libwebp.pc" />
+              </Component>
+              <Component Id="cmpDEBC768212E8C16C2CCEB230A4ACE97D" Guid="*">
+                <File Id="filB36707F0DD0523AA1474CF0D95728328" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\pkgconfig\libwebpdecoder.pc" />
+              </Component>
+              <Component Id="cmp4B72FA77A26069796C58B07BC72FDF41" Guid="*">
+                <File Id="fil7C6181511F2BFFB5F5B5A8CFBB654E5D" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\pkgconfig\libwebpdemux.pc" />
+              </Component>
+              <Component Id="cmp71786542222056B9BCF228CFDF6FA9BA" Guid="*">
+                <File Id="fil34D189B3DC473D1CBEDCA45009906083" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\lib\pkgconfig\libwebpmux.pc" />
+              </Component>
+            </Directory>
+          </Directory>
+          <Directory Id="dirC1BD58E1FEB887643372D3D0A68C9AEF" Name="share">
+            <Directory Id="dir6107B81477DA7E65E788093A8292BE24" Name="man">
+              <Directory Id="dirB59C8C097CFBFE67F43BE328E03CA6C3" Name="man1">
+                <Component Id="cmp4DA922BCC440B4EE62938578C804C2B9" Guid="*">
+                  <File Id="fil6D40790DFD5E2B0CAF0DFAF3FB14AFFC" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man\man1\cwebp.1" />
+                </Component>
+                <Component Id="cmpCEEE7D4207FFE1629B561CA50E6AED70" Guid="*">
+                  <File Id="fil06A85FC8B01D197462D05FB553AA35C7" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man\man1\dwebp.1" />
+                </Component>
+                <Component Id="cmp6F9C2340F8F69C13133E6141E48F206B" Guid="*">
+                  <File Id="fil626A2C5B9096A6939FA51B1AC11AC252" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man\man1\gif2webp.1" />
+                </Component>
+                <Component Id="cmp67A988C5B250A8B59D94DCE5FB4279B0" Guid="*">
+                  <File Id="filDE4BF6895D1D1841776A5D33B1737123" KeyPath="yes" Source="libwebp\libwebp-0.6.0-windows-x64-no-wic\share\man\man1\webpmux.1" />
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="libwebp">
+      <ComponentRef Id="cmp03FC60FD4FD1FD59559B6A901D50FE25" />
+      <ComponentRef Id="cmp6F1BFE0FE3D8F078EC80ECFE99267EEE" />
+      <ComponentRef Id="cmpFCBCDF7EBFF1854CE7F409A4F0C58D7C" />
+      <ComponentRef Id="cmp32450DDDD7CBE5B5207432F83AFD59AE" />
+      <ComponentRef Id="cmpE6ED10BFCFB207C8C3E15461859911D5" />
+      <ComponentRef Id="cmp903EF1FEC0BAC4CB4075F3571ADFE5AA" />
+      <ComponentRef Id="cmp5C3EFE975771E035B8871A2F7F2D2A49" />
+      <ComponentRef Id="cmpF732EFFF668296A282A452C7057CBD41" />
+      <ComponentRef Id="cmp6EA22DF2EEB957FD0BBB81B5B47AC580" />
+      <ComponentRef Id="cmpB0A03CC02F735A016B1197C9594342BF" />
+      <ComponentRef Id="cmp82CF56635B61D0912BBD37E70E44C555" />
+      <ComponentRef Id="cmp7675EC369EB779A7172DBA23E847FFB4" />
+      <ComponentRef Id="cmp1D4A6E2B0188F0E72EEDDDC68033EB65" />
+      <ComponentRef Id="cmp6908FC86E7406C623FB2668C36DCA3A8" />
+      <ComponentRef Id="cmpB596612BEBD35DEE25ACFF91F254F19D" />
+      <ComponentRef Id="cmpCAC49D6C1DDEE7B6B676E99199CD8EA3" />
+      <ComponentRef Id="cmp611019CDB2F00571E6EF90325DF9B99D" />
+      <ComponentRef Id="cmpBB8462081D5B3C76EE2EE723EEEF2B27" />
+      <ComponentRef Id="cmpE8803E0B7094EC870B24AB6876510617" />
+      <ComponentRef Id="cmpEF8A8C3B73F08620D4E8EA337CB4C821" />
+      <ComponentRef Id="cmpF8B0E4E4650EBCD012A7EBAA17427FE5" />
+      <ComponentRef Id="cmpD6A342B9260218E3EF5464335CC76859" />
+      <ComponentRef Id="cmp37EE3939EF2065D13F1073809D01A797" />
+      <ComponentRef Id="cmp7537AF1AF90467B1034526C389EF3084" />
+      <ComponentRef Id="cmpF1CA9341C045DDE9B831E4906E1F6F80" />
+      <ComponentRef Id="cmp9EC2D83D5990AC2E89BF8BE475A73027" />
+      <ComponentRef Id="cmp8A0AB572C691416739DD26AE09F0AE0B" />
+      <ComponentRef Id="cmpDEBC768212E8C16C2CCEB230A4ACE97D" />
+      <ComponentRef Id="cmp4B72FA77A26069796C58B07BC72FDF41" />
+      <ComponentRef Id="cmp71786542222056B9BCF228CFDF6FA9BA" />
+      <ComponentRef Id="cmp4DA922BCC440B4EE62938578C804C2B9" />
+      <ComponentRef Id="cmpCEEE7D4207FFE1629B561CA50E6AED70" />
+      <ComponentRef Id="cmp6F9C2340F8F69C13133E6141E48F206B" />
+      <ComponentRef Id="cmp67A988C5B250A8B59D94DCE5FB4279B0" />
     </ComponentGroup>
   </Fragment>
 </Wix>
